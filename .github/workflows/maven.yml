@@ -1,0 +1,44 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: step 1 - checkout main branch from GitHub 
+      uses: actions/setup-java@v2
+
+      
+    - name: step 2 - set up JDK 1.8
+      uses: actions/checkot@v1
+      with:
+        java-version: 1.8
+        
+
+    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    - name: step 3 - Have GitHub Actions Build Maven Project
+      run: mvn -B package --file pom.xml
+
+    - name: step 4 - List the current directory
+      run: ls -a
+
+    - name: step 5 - What is in the target folder?
+      run: 
+         cd target
+         ls -a
